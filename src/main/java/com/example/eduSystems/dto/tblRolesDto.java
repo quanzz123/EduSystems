@@ -1,4 +1,4 @@
-package com.example.eduSystems.models;
+package com.example.eduSystems.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 

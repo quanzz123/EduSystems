@@ -1,4 +1,4 @@
-package com.example.eduSystems.services;
+package com.example.eduSystems.Repository;
 
 import com.example.eduSystems.models.tblRoles;
 import org.springframework.data.jpa.repository.JpaRepository;

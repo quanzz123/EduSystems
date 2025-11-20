@@ -1,4 +1,4 @@
-package com.example.eduSystems.models;
+package com.example.eduSystems.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -7,9 +7,10 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Date;
 
 public class tblUsersDto {
-
+    private  Integer userid;
     @NotNull(message = "Role is required")
     private Integer roleid;
+    private String rolename;
     @NotEmpty(message = "username is required")
     private String username;
     @NotEmpty(message = "pass is required")
@@ -23,12 +24,28 @@ public class tblUsersDto {
     private Date created;
     private boolean active;
 
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
+    }
+
     public @NotNull(message = "Role is required") Integer getRoleid() {
         return roleid;
     }
 
     public void setRoleid(@NotNull(message = "Role is required") Integer roleid) {
         this.roleid = roleid;
+    }
+
+    public String getRolename() {
+        return rolename;
+    }
+
+    public void setRolename(String rolename) {
+        this.rolename = rolename;
     }
 
     public @NotEmpty(message = "username is required") String getUsername() {
