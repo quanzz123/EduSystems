@@ -23,7 +23,9 @@ public class UserService {
     private RolesRepository roleRepo;
 
     public List<tblUsersDto> getAll() {
-        return userRepo.findAllByActiveTrue().stream().filter(tblUsers::isActive).map(this ::toDto).collect(Collectors.toList());
+        return userRepo.findAllByActiveTrue()
+                .stream().filter(tblUsers::isActive).
+                map(this ::toDto).collect(Collectors.toList());
     }
 
     public tblUsersDto getUserById(int id) {
