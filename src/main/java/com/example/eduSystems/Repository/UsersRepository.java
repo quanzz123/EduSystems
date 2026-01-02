@@ -12,4 +12,9 @@ public interface UsersRepository extends JpaRepository<tblUsers, Integer>  {
 
     List<tblUsers> findAllByActiveTrue();
 
+    @Query("SELECT t FROM tblUsers t WHERE t.role.roleid = 5 and t.active=true ")
+    List<tblUsers> findTeacher();
+
+    @Query("SELECT t FROM tblUsers t WHERE t.role.roleid = 4 and t.active=true ")
+    List<tblUsers> FindAllUsers();
 }

@@ -31,6 +31,7 @@ public class AccountsController {
     @Autowired
     RolesRepository rolesRepository;
 
+    
     @GetMapping("")
     public String index(Model model) {
         List<tblUsersDto> users = userservice.getAll();
@@ -48,14 +49,7 @@ public class AccountsController {
     @PostMapping("/create")
     public String CreateAccount(@Valid @ModelAttribute("tbluserDto") tblUsersDto tbluserDto, Model model
                                 , BindingResult result) throws Exception {
-        // debug
-        /*System.out.println(tbluserDto.getUsername());
-        System.out.println(tbluserDto.getRoleid());
-        System.out.println(tbluserDto.getFullname());
-        System.out.println(tbluserDto.getEmail());
-        System.out.println(tbluserDto.getPhone());
-        System.out.println(tbluserDto.getAddress());
-        System.out.println(tbluserDto.getPasswordhash());*/
+
         if(result.hasErrors()) {
             model.addAttribute("roles", rolesRepository.findAll());
             return "/admin/accounts/create";
@@ -93,5 +87,6 @@ public class AccountsController {
         userservice.delete(id);
         return "redirect:/admin/accounts";
     }
+
 
 }

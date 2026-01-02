@@ -24,6 +24,7 @@ public class tblClassMembers {
     @JoinColumn(name = "userid")
     private tblUsers user;
 
+
     public int getMemberid() {
         return memberid;
     }

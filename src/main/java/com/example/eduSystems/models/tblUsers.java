@@ -23,6 +23,9 @@ public class tblUsers {
     @OneToMany(mappedBy = "user")
     private List<tblClassMembers> classmember;
 
+    @OneToMany(mappedBy = "user")
+    private List<tblSubmissions> submissions;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "roleid")
     private tblRoles role;
@@ -115,4 +118,14 @@ public class tblUsers {
     public void setClassmember(List<tblClassMembers> classmember) {
         this.classmember = classmember;
     }
+
+    public List<tblSubmissions> getSubmissions() {
+        return submissions;
+    }
+
+    public void setSubmissions(List<tblSubmissions> submissions) {
+        this.submissions = submissions;
+    }
+
+    
 }

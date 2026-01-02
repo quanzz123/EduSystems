@@ -11,10 +11,10 @@ public class tblClassMembersDto {
     private double finalscore;
     private String note;
 
-    private int userid;
+    private Integer userid;
     private String fullname;
 
-    private int classid;
+    private Integer classid;
     private String classname;
 
     public int getMemberid() {
@@ -65,11 +65,11 @@ public class tblClassMembersDto {
         this.note = note;
     }
 
-    public int getUserid() {
+    public Integer getUserid() {
         return userid;
     }
 
-    public void setUserid(int userid) {
+    public void setUserid(Integer userid) {
         this.userid = userid;
     }
 
@@ -81,11 +81,11 @@ public class tblClassMembersDto {
         this.fullname = fullname;
     }
 
-    public int getClassid() {
+    public Integer getClassid() {
         return classid;
     }
 
-    public void setClassid(int classid) {
+    public void setClassid(Integer classid) {
         this.classid = classid;
     }
 

@@ -1,0 +1,52 @@
+<div xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/layout}">
+
+    <div layout:fragment="content">
+        <div class="content container-fluid">
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="mt-5">
+                            <h4 class="card-title float-left mt-2">Danh sách bài tập</h4>
+                            <a th:href="@{/admin/assignments/create}" class="btn btn-primary float-right veiwbutton ">Thêm mới bài tập</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body"> 
+                            <div class="table-responsive">
+                                <table class="datatable table table-stripped">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Tiêu đề</th>
+                                            <th>File</th>
+                                            <th>Ngày tạo</th>
+                                            <th>Hạn nộp</th>
+                                            <th>Hành động</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="a, stat : ${assignments}">
+                                            <td>${stat.index + 1}</td>
+                                            <td>${a.title}</td>
+                                            <td><a href="invoice-view.html">${a.fileurl}</a></td>
+                                            <td>${a.createdate}</td>
+                                            <td>${a.deadline}</td>
+                                            <td>5-5-2020</td>
+                                            <td>$320,000</td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

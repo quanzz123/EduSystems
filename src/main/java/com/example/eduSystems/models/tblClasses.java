@@ -21,6 +21,7 @@ public class tblClasses {
     private String imagename;
     private Date createdate;
     private Date modifieddate;
+    private boolean active;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid")
@@ -29,6 +30,9 @@ public class tblClasses {
     @OneToMany(mappedBy = "clas")
     private List<tblClassMembers> members;
 
+    @OneToMany(mappedBy = "clas")
+    private List<tblAssignments> assignments;
+    
     public int getClassid() {
         return classid;
     }
@@ -109,6 +113,14 @@ public class tblClasses {
         this.modifieddate = modifieddate;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public tblUsers getTeacher() {
         return teacher;
     }
@@ -124,4 +136,14 @@ public class tblClasses {
     public void setMembers(List<tblClassMembers> members) {
         this.members = members;
     }
+
+    public List<tblAssignments> getAssignments() {
+        return assignments;
+    }
+
+    public void setAssignments(List<tblAssignments> assignments) {
+        this.assignments = assignments;
+    }
+
+    
 }

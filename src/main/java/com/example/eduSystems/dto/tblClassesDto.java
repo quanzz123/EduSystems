@@ -1,6 +1,8 @@
 package com.example.eduSystems.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -9,21 +11,35 @@ public class tblClassesDto {
 
     private int classid;
     @NotEmpty(message = "class name is requied!")
+
     private String classname;
+
     private String description;
+
     @NotEmpty(message = "Subject is requied")
     private String subject;
-    @NotEmpty(message = "Start Date is requied")
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @NotNull(message = "Start Date is requied")
     private Date startdate;
-    @NotEmpty(message = "End Date is requied")
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @NotNull(message = "End Date is requied")
     private Date enddate;
+
     @NotEmpty(message = "Schedule Date is requied")
     private String schedule;
+
     private String imagename;
+
     private Date createdate;
+
     private Date modifieddate;
 
-    private int teacherid;
+    private Boolean active;
+
+    private Integer teacherid;
+
     private String teachername;
 
     private List<tblClassMembersDto> members;
@@ -60,19 +76,19 @@ public class tblClassesDto {
         this.subject = subject;
     }
 
-    public @NotEmpty(message = "Start Date is requied") Date getStartdate() {
+    public @NotNull(message = "Start Date is requied") Date getStartdate() {
         return startdate;
     }
 
-    public void setStartdate(@NotEmpty(message = "Start Date is requied") Date startdate) {
+    public void setStartdate(@NotNull(message = "Start Date is requied") Date startdate) {
         this.startdate = startdate;
     }
 
-    public @NotEmpty(message = "End Date is requied") Date getEnddate() {
+    public @NotNull(message = "End Date is requied") Date getEnddate() {
         return enddate;
     }
 
-    public void setEnddate(@NotEmpty(message = "End Date is requied") Date enddate) {
+    public void setEnddate(@NotNull(message = "End Date is requied") Date enddate) {
         this.enddate = enddate;
     }
 
@@ -108,11 +124,11 @@ public class tblClassesDto {
         this.modifieddate = modifieddate;
     }
 
-    public int getTeacherid() {
+    public Integer getTeacherid() {
         return teacherid;
     }
 
-    public void setTeacherid(int teacherid) {
+    public void setTeacherid(Integer teacherid) {
         this.teacherid = teacherid;
     }
 
@@ -130,5 +146,13 @@ public class tblClassesDto {
 
     public void setMembers(List<tblClassMembersDto> members) {
         this.members = members;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

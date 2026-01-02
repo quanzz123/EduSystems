@@ -1,0 +1,100 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="~{admin/layout}">
+
+    <div  layout:fragment="content" >
+        <div class="content container-fluid">
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title mt-5">Thêm mới lớp học</h3> </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form method="post" th:object="${classDto}">
+                        <input type="hidden" th:field="*{classid}">
+                        <div class="row formtype">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Tên lớp</label>
+                                    <input class="form-control" type="text" th:field="*{classname}" >
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Tên môn học</label>
+                                    <input class="form-control" type="text" th:field="*{subject}" >
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Lịch học</label>
+                                    <input class="form-control" type="text" th:field="*{schedule}" >
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Bắt đầu</label>
+                                    <div class="cal-icon">
+                                        <input type="text" class="form-control datetimepicker" th:field="*{startdate}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Kết thúc</label>
+                                    <div class="cal-icon">
+                                        <input type="text" class="form-control datetimepicker"  th:field="*{enddate}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Giáo viên</label>
+                                    <select class="form-control"  th:field="*{teacherid}">
+                                        <option value="">--chọn giáo viên--</option>
+                                        <option th:each="t : ${teacher}"
+                                                th:value="${t.userid}"
+                                                th:text="${t.fullname}"
+                                        ></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Hoạt động</label>
+                                    <div class="col-md-10">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="radio" id="option1" th:field="*{active}" th:value="true">
+                                            <label class="form-check-label" for="option1">Hiện</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="radio" id="option2" th:field="*{active}" th:value="false">
+                                            <label class="form-check-label" for="option2">Ẩn</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Mô tả</label>
+                                    <textarea class="form-control" rows="5" id="comment" th:field="*{description}"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary">Lưu</button>
+                                <a style="margin-left: 2px" th:href="@{/admin/class}" class="btn btn-danger">Huỷ</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
