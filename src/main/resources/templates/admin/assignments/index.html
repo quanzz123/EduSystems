@@ -8,7 +8,8 @@
                     <div class="col">
                         <div class="mt-5">
                             <h4 class="card-title float-left mt-2">Danh sách bài tập</h4>
-                            <a th:href="@{/admin/assignments/create}" class="btn btn-primary float-right veiwbutton ">Thêm mới bài tập</a>
+                            <a th:href="@{/admin/assignments/create(classid=${classid})}"
+                                class="btn btn-primary float-right veiwbutton ">Thêm mới bài tập</a>
                         </div>
                     </div>
                 </div>
@@ -16,7 +17,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
-                        <div class="card-body"> 
+                        <div class="card-body">
                             <div class="table-responsive">
                                 <table class="datatable table table-stripped">
                                     <thead>
@@ -31,15 +32,28 @@
                                     </thead>
                                     <tbody>
                                         <tr th:each="a, stat : ${assignments}">
-                                            <td>${stat.index + 1}</td>
-                                            <td>${a.title}</td>
-                                            <td><a href="invoice-view.html">${a.fileurl}</a></td>
-                                            <td>${a.createdate}</td>
-                                            <td>${a.deadline}</td>
-                                            <td>5-5-2020</td>
-                                            <td>$320,000</td>
+                                            <td th:text="${stat.index + 1}"></td>
+                                            <td th:text="${a.title}"></td>
+                                            <td><a th:href="@{${a.fileurl}}">Tải xuống</a></td>
+                                            <td th:text="${a.createdate}"></td>
+                                            <td th:text="${a.deadline}"></td>
+                                            <td>
+                                                <div class="d-flex gap-2">
+                                                    <a href="/edit/1" class="btn btn-sm btn-warning ">
+                                                        <i class="bi bi-pencil"></i> Sửa
+                                                    </a>|
+                                                    <a href="/delete/1" class="btn btn-sm btn-danger "
+                                                        onclick="return confirm('Xóa bài này?')">
+                                                        <i class="bi bi-trash"></i> Xóa
+                                                    </a>|
+                                                    <a href="/submit/1" class="btn btn-sm btn-primary">
+                                                        <i class="bi bi-file-earmark-arrow-up"></i> Bài nộp
+                                                    </a>
+                                                </div>
+                                            </td>
+
                                         </tr>
-                                        
+
                                     </tbody>
                                 </table>
                             </div>

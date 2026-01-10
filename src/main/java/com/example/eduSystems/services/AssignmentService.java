@@ -51,4 +51,20 @@ public class AssignmentService {
 
         return result;
     }
+
+    public void SaveAssignment(tblAssignmentDto assignmentDto) {
+
+        tblClasses classes = classRepo.findById(assignmentDto.getClassid()).get();
+
+        tblAssignments assignment = new tblAssignments();
+        assignment.setTitle(assignmentDto.getTitle());
+        assignment.setDescription(assignmentDto.getDescription());
+        assignment.setFileurl(assignmentDto.getFileurl());
+        assignment.setDeadline(assignmentDto.getDeadline());
+        assignment.setCreatedate(assignmentDto.getCreatedate());
+        assignment.setActive(assignmentDto.getActive());
+        assignment.setClas(classes);
+        assignRepo.save(assignment);
+
+    }
 }
