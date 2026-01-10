@@ -34,15 +34,15 @@
                                         <tr th:each="a, stat : ${assignments}">
                                             <td th:text="${stat.index + 1}"></td>
                                             <td th:text="${a.title}"></td>
-                                            <td><a th:href="@{${a.fileurl}}">Tải xuống</a></td>
-                                            <td th:text="${a.createdate}"></td>
-                                            <td th:text="${a.deadline}"></td>
+                                            <td><a th:href="@{${a.fileurl}}" class="btn btn-sm btn-primary">Tải xuống</a></td>
+                                            <td th:text="${a.formattedCreatedate}"></td>
+                                            <td th:text="${a.formattedDeadline}"></td>
                                             <td>
                                                 <div class="d-flex gap-2">
-                                                    <a href="/edit/1" class="btn btn-sm btn-warning ">
+                                                    <a th:href="@{/admin/assignments/edit(id=${a.assignmentid})}" class="btn btn-sm btn-warning ">
                                                         <i class="bi bi-pencil"></i> Sửa
                                                     </a>|
-                                                    <a href="/delete/1" class="btn btn-sm btn-danger "
+                                                    <a th:href="@{/admin/assignments/delete(id=${a.assignmentid})}" class="btn btn-sm btn-danger "
                                                         onclick="return confirm('Xóa bài này?')">
                                                         <i class="bi bi-trash"></i> Xóa
                                                     </a>|

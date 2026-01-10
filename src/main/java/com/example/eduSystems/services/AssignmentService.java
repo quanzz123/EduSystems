@@ -67,4 +67,44 @@ public class AssignmentService {
         assignRepo.save(assignment);
 
     }
+
+    public void delete(int id) {
+        tblAssignments assignment = assignRepo.findById(id).orElse(null);
+        assignment.setActive(false);
+        assignRepo.save(assignment);
+    }
+
+    public tblAssignmentDto getAssignmentById(int id) {
+        tblAssignments a = assignRepo.findById(id).orElse(null);
+        tblAssignmentDto dto = new tblAssignmentDto();
+
+        dto.setAssignmentid(a.getAssignmentid());
+        dto.setTitle(a.getTitle());
+        dto.setDescription(a.getDescription());
+        dto.setFileurl(a.getFileurl());
+        dto.setDeadline(a.getDeadline());
+        dto.setCreatedate(a.getCreatedate());
+        dto.setModifieddate(a.getModifieddate());
+        dto.setActive(a.isActive());
+        if(a.getClas() != null) {
+            dto.setClassid(a.getClas().getClassid());
+        }
+
+        return dto;
+    }
+
+    public void updateAssignment(tblAssignmentDto assignmentDto) {
+        tblAssignments assignment = assignRepo.findById(assignmentDto.getAssignmentid()).orElse(null);
+
+        assignment.setTitle(assignmentDto.getTitle());
+        assignment.setDescription(assignmentDto.getDescription());
+        if(assignmentDto.getFileurl() != null) {
+            assignment.setFileurl(assignmentDto.getFileurl());
+        }
+        assignment.setDeadline(assignmentDto.getDeadline());
+        assignment.setModifieddate(new java.util.Date());
+        assignment.setActive(assignmentDto.getActive());
+
+        assignRepo.save(assignment);
+    }
 }

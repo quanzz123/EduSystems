@@ -25,6 +25,9 @@ public class tblAssignmentDto {
     private List<tblSubmissionDto> submissions;
     private Integer classid;
 
+    //hai trương mới để hiển thị ngày đã format
+    private String formattedDeadline;
+    private String formattedCreatedate;
     public tblAssignmentDto() {}
     
     public tblAssignmentDto(int assignmentid, @NotEmpty(message = "title is requied") String title, String description,
@@ -101,6 +104,22 @@ public class tblAssignmentDto {
     }
     public void setClassid(Integer classid) {
         this.classid = classid;
+    }
+
+    public String getFormattedDeadline() {
+        return formattedDeadline;
+    }
+
+    public void setFormattedDeadline(String formattedDeadline) {
+        this.formattedDeadline = formattedDeadline;
+    }
+
+    public String getFormattedCreatedate() {
+        return formattedCreatedate;
+    }
+
+    public void setFormattedCreatedate(String formattedCreatedate) {
+        this.formattedCreatedate = formattedCreatedate;
     }
 
     
