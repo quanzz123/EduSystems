@@ -28,7 +28,7 @@
                                             <th>Bắt đầu</th>
                                             <th>Kết thúc</th>
                                             <th>Lịch</th>
-                                            <th class="text-right">Actions</th>
+                                            <th class="text-right">Hành động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -47,11 +47,11 @@
                                                     <div class="dropdown-menu dropdown-menu-right">
                                                         <a class="dropdown-item"
                                                             th:href="@{/admin/class/edit(id=${c.classid})}"><i
-                                                                class="fas fa-pencil-alt m-r-5"></i> Edit</a>
+                                                                class="fas fa-pencil-alt m-r-5"></i> Sửa</a>
                                                         <a class="dropdown-item"
                                                             th:href="@{/admin/class/delete(id=${c.classid})}"
                                                             onclick="return confirm('Ban có chắc chắn xoá?')">
-                                                            <i class="fas fa-trash-alt m-r-5"></i> Delete
+                                                            <i class="fas fa-trash-alt m-r-5"></i> Xoá
                                                         </a>
                                                     </div>
                                                 </div>

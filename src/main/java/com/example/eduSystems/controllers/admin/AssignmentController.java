@@ -42,4 +42,14 @@ public class AssignmentController {
         model.addAttribute("classid", classid);
         return "/admin/assignments/index";
     }
+
+    @GetMapping("/create")
+    public String create(@RequestParam("classid") Integer classid, Model model) {
+        tblAssignmentDto assignmentDto = new tblAssignmentDto();
+        assignmentDto.setClassid(classid);
+        model.addAttribute("assignment", assignmentDto);
+        return "/admin/assignments/create";
+    }
+    
 }
+     
