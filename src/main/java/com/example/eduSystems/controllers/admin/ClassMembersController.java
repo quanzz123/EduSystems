@@ -10,6 +10,7 @@ import com.example.eduSystems.models.tblClasses;
 import com.example.eduSystems.services.ClassMemberService;
 import com.example.eduSystems.services.ClassService;
 import com.example.eduSystems.services.UserService;
+import com.example.eduSystems.utilities.Functions;
 
 import jakarta.persistence.PrePersist;
 
@@ -40,7 +41,12 @@ public class ClassMembersController {
 
     @GetMapping("")
     public String index(Model model) {
-        List<tblClasses> classes = classservice.FinClassByTeacher();
+         if (!Functions.isLogin()) {
+            return "redirect:/admin/auth/login";
+        }
+        model.addAttribute("userName", Functions.get_UserName());
+        Integer userid = Functions.get_UserId();
+        List<tblClasses> classes = classservice.FinClassByTeacher(userid);
         model.addAttribute("classes", classes);
         return "admin/classmembers/index";
     }
@@ -76,9 +82,14 @@ public class ClassMembersController {
     }
     @GetMapping("/edit")
     public String EditMembersPage(Model model, String id) {
+        if (!Functions.isLogin()) {
+            return "redirect:/admin/auth/login";
+        }
+        model.addAttribute("userName", Functions.get_UserName());
+        Integer userid = Functions.get_UserId();
         int memberId = Integer.parseInt(id);
         tblClassMembersDto MemberDto = memberService.getClassMembersById(memberId);
-        List<tblClasses> classes = classservice.FinClassByTeacher();
+        List<tblClasses> classes = classservice.FinClassByTeacher(userid);
         model.addAttribute("members", MemberDto);
         model.addAttribute("classes", classes);
         model.addAttribute("classId", MemberDto.getClassid());
@@ -87,8 +98,13 @@ public class ClassMembersController {
 
     @PostMapping("/edit")
     public String UpdateMember(@ModelAttribute("members") tblClassMembersDto MemberDto, Model model, BindingResult result) throws Exception {
+        if (!Functions.isLogin()) {
+            return "redirect:/admin/auth/login";
+        }
+        model.addAttribute("userName", Functions.get_UserName());
+        Integer userid = Functions.get_UserId();
         if(result.hasErrors()) {
-            List<tblClasses> classes = classservice.FinClassByTeacher();
+            List<tblClasses> classes = classservice.FinClassByTeacher(userid);
             model.addAttribute("classes", classes);
         }
         memberService.update(MemberDto);

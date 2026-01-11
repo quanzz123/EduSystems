@@ -101,6 +101,22 @@ public class UserService {
             user.setCreated(new Date());
         }
     }
+
+    // xác thực người dùng trang admin
+     public tblUsersDto authenticate(String username, String passwordhash) {
+        try {
+            tblUsers user = userRepo.findUserByUsernameAndPasswordhash(username, passwordhash);
+            tblUsersDto userDto = toDto(user);
+            if (userDto == null) {
+                return null;
+                
+            }
+            return userDto;
+        } catch (Exception e) {
+            System.err.println("Loi khi xac thuc: " + e.getMessage());
+            return null;
+        }
+    }
     
     /**
      * Tìm user theo username (dùng cho authentication)

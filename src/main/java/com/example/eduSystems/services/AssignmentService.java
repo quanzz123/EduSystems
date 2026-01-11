@@ -28,8 +28,8 @@ public class AssignmentService {
     @Autowired
     ClassRepository classRepo;
 
-    public List<tblClasses> FinClassByTeacher() {
-        return classRepo.FindAllWithTeacher();
+    public List<tblClasses> FinClassByTeacher(Integer userid) {
+        return classRepo.findByUserid(userid);
     }
 
     public List<tblAssignmentDto> getAssignmentsByclassid(Integer classid) {

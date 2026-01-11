@@ -20,6 +20,7 @@ import com.example.eduSystems.models.tblClasses;
 import com.example.eduSystems.services.ClassService;
 import com.example.eduSystems.services.LessonContentService;
 import com.example.eduSystems.services.LessonService;
+import com.example.eduSystems.utilities.Functions;
 
 import groovy.lang.Binding;
 import jakarta.persistence.criteria.CriteriaBuilder.In;
@@ -46,7 +47,12 @@ public class LessonController {
 
     @GetMapping("")
     public String index(Model model) {
-        List<tblClasses> classes = classservice.FinClassByTeacher();
+         if (!Functions.isLogin()) {
+            return "redirect:/admin/auth/login";
+        }
+        model.addAttribute("userName", Functions.get_UserName());
+        Integer userid = Functions.get_UserId();
+        List<tblClasses> classes = classservice.FinClassByTeacher(userid);
         model.addAttribute("classes", classes);
         for (tblClasses cls : classes) {
             System.out.println("Class Name: " + cls.getClassname());

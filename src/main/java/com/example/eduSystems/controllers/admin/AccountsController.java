@@ -7,6 +7,8 @@ import com.example.eduSystems.dto.tblUsersDto;
 import com.example.eduSystems.Repository.RolesRepository;
 import com.example.eduSystems.Repository.UsersRepository;
 import com.example.eduSystems.services.UserService;
+import com.example.eduSystems.utilities.Functions;
+
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,9 +33,14 @@ public class AccountsController {
     @Autowired
     RolesRepository rolesRepository;
 
-    
     @GetMapping("")
     public String index(Model model) {
+        if (!Functions.isLogin()) {
+            return "redirect:/admin/auth/login";
+        }
+        if (!Functions.checkRole("ADMIN")) {
+            return "/admin/notfound/deny";
+        }
         List<tblUsersDto> users = userservice.getAll();
         model.addAttribute("users", users);
         System.out.println(users);
@@ -42,15 +49,28 @@ public class AccountsController {
 
     @GetMapping("/create")
     public String showCreatePage(Model model) {
+        if (!Functions.isLogin()) {
+            return "redirect:/admin/auth/login";
+        }
+        if (!Functions.checkRole("ADMIN")) {
+            return "/admin/notfound/deny";
+        }
         model.addAttribute("tbluserDto", new tblUsersDto());
         model.addAttribute("roles", rolesRepository.findAll());
         return "/admin/accounts/create";
     }
-    @PostMapping("/create")
-    public String CreateAccount(@Valid @ModelAttribute("tbluserDto") tblUsersDto tbluserDto, Model model
-                                , BindingResult result) throws Exception {
 
-        if(result.hasErrors()) {
+    @PostMapping("/create")
+    public String CreateAccount(@Valid @ModelAttribute("tbluserDto") tblUsersDto tbluserDto, Model model,
+            BindingResult result) throws Exception {
+        if (!Functions.isLogin()) {
+            return "redirect:/admin/auth/login";
+        }
+        if (!Functions.checkRole("ADMIN")) {
+            return "/admin/notfound/deny";
+        }
+
+        if (result.hasErrors()) {
             model.addAttribute("roles", rolesRepository.findAll());
             return "/admin/accounts/create";
         }
@@ -58,8 +78,15 @@ public class AccountsController {
 
         return "redirect:/admin/accounts";
     }
+
     @GetMapping("/edit")
-    public  String editpage(Model model, String id) {
+    public String editpage(Model model, String id) {
+        if (!Functions.isLogin()) {
+            return "redirect:/admin/auth/login";
+        }
+        if (!Functions.checkRole("ADMIN")) {
+            return "/admin/notfound/deny";
+        }
         tblUsersDto usersDto = userservice.getUserById(Integer.parseInt(id));
         model.addAttribute("usersDto", usersDto);
         model.addAttribute("roles", rolesRepository.findAll());
@@ -68,8 +95,14 @@ public class AccountsController {
 
     @PostMapping("/edit")
     public String updateAcount(Model model, @RequestParam int id, tblUsersDto tblUsersDto,
-                                BindingResult result) throws IOException {
-        if(result.hasErrors()) {
+            BindingResult result) throws IOException {
+        if (!Functions.isLogin()) {
+            return "redirect:/admin/auth/login";
+        }
+        if (!Functions.checkRole("ADMIN")) {
+            return "/admin/notfound/deny";
+        }
+        if (result.hasErrors()) {
             model.addAttribute("tblUsersDto", tblUsersDto);
             model.addAttribute("roles", rolesRepository.findAll());
             return "/admin/accounts/edit";
@@ -78,15 +111,21 @@ public class AccountsController {
 
         return "redirect:/admin/accounts";
     }
+
     @GetMapping("/delete")
     public String deleteAcount(@RequestParam int id) {
+        if (!Functions.isLogin()) {
+            return "redirect:/admin/auth/login";
+        }
+        if (!Functions.checkRole("ADMIN")) {
+            return "/admin/notfound/deny";
+        }
 
-        if(id == 0) {
+        if (id == 0) {
             return "redirect:/admin/accounts";
         }
         userservice.delete(id);
         return "redirect:/admin/accounts";
     }
-
 
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+	<title>Đăng nhập</title>
+	<link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/dhvimg.png}">
+	<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/plugins/fontawesome/css/fontawesome.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/plugins/fontawesome/css/all.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/feathericon.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/plugins/morris/morris.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/style.css}"> </head>
+
+<body>
+	<div class="main-wrapper login-body">
+		<div class="login-wrapper">
+			<div class="container">
+				<div class="loginbox">
+					<div class="login-left"> <img class="img-fluid" th:src="@{/assets/img/dhvimg.png}" alt="Logo"> </div>
+					<div class="login-right">
+						<div class="login-right-wrap">
+							<h1>Đăng nhập</h1>
+							<p class="account-subtitle">Truy cập vào bảng điều khiển của chúng tôi</p>
+							<form th:action="@{/admin/auth/login}" method="post">
+								<div class="form-group">
+									<input class="form-control" type="text" name="username" placeholder="Tên đăng nhập"> </div>
+								<div class="form-group">
+									<input class="form-control" type="password" name="password" placeholder="Mật khẩu"> </div>
+								<div class="form-group">
+									<button class="btn btn-primary btn-block" type="submit">Đăng nhập</button>
+								</div>
+							</form>
+							<div class="text-center forgotpass"><a href="forgot-password.html">Quên mật khẩu? Liên hệ ngay với bộ phận hỗ trợ</a> </div>
+				
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/assets/js/jquery-3.5.1.min.js}"></script>
+	<script th:src="@{/assets/js/popper.min.js}"></script>
+	<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+	<script th:src="@{/assets/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+	<script th:src="@{/assets/js/script.js}"></script>
+</body>
+
+</html>

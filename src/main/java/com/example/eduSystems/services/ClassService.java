@@ -13,6 +13,8 @@ import com.example.eduSystems.dto.tblClassesDto;
 import com.example.eduSystems.models.tblClasses;
 import com.example.eduSystems.models.tblUsers;
 
+import jakarta.persistence.criteria.CriteriaBuilder.In;
+
 @Service
 public class ClassService {
     @Autowired
@@ -28,8 +30,8 @@ public class ClassService {
         return toDto(classes);
     }
 
-    public List<tblClasses> FinClassByTeacher() {
-        return classRepo.FindAllWithTeacher();
+    public List<tblClasses> FinClassByTeacher(Integer userid) {
+        return classRepo.findByUserid(userid);
     }
 
     public void delete(Integer id) {

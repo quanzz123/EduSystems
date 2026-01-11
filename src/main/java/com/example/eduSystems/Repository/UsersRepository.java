@@ -29,4 +29,7 @@ public interface UsersRepository extends JpaRepository<tblUsers, Integer>  {
     
     // Kiểm tra email có tồn tại không
     boolean existsByEmail(String email);
+
+    tblUsers  findUserByUsernameAndPasswordhash(String username, String passwordhash);
 }
+    

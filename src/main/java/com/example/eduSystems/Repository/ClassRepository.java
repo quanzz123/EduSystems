@@ -11,6 +11,7 @@ import com.example.eduSystems.models.tblClasses;
 
 @Repository
 public interface ClassRepository extends JpaRepository<tblClasses, Integer> {
+    
     @Query("SELECT c FROM tblClasses c WHERE c.active = true")
     List<tblClasses> findallActive();
     @Query("SELECT c FROM tblClasses c WHERE c.teacher.userid = 5 AND c.active = true")
@@ -20,7 +21,7 @@ public interface ClassRepository extends JpaRepository<tblClasses, Integer> {
      * Tìm lớp học theo userid (giáo viên)
      * Sử dụng naming convention của Spring Data JPA
      */
-    @Query("SELECT c FROM tblClasses c WHERE c.teacher.userid = :userid")
+    @Query("SELECT c FROM tblClasses c WHERE c.teacher.userid = :userid AND c.active = true")
     List<tblClasses> findByUserid(@Param("userid") int userid);
     
     /**

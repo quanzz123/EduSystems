@@ -23,6 +23,7 @@ import com.example.eduSystems.models.tblClasses;
 import com.example.eduSystems.services.AssignmentService;
 import com.example.eduSystems.services.ClassService;
 import com.example.eduSystems.services.SubmissionsService;
+import com.example.eduSystems.utilities.Functions;
 
 // import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -41,8 +42,15 @@ public class AssignmentController {
 
     @GetMapping("")
     public String list(Model model) {
-
-        List<tblClasses> classes = classservice.FinClassByTeacher();
+         if (!Functions.isLogin()) {
+            return "redirect:/admin/auth/login";
+        }
+        if(!Functions.checkRole("ADMIN") && !Functions.checkRole("TEACHER")) {
+            return "/admin/notfound/deny";
+        }
+        model.addAttribute("userName", Functions.get_UserName());
+        Integer userid = Functions.get_UserId(); 
+        List<tblClasses> classes = classservice.FinClassByTeacher(userid);
         model.addAttribute("classes", classes);
         for (tblClasses cls : classes) {
             System.out.println("Class Name: " + cls.getClassname());
@@ -53,6 +61,12 @@ public class AssignmentController {
 
     @GetMapping("/index")
     public String index(@RequestParam("classid") Integer classid, Model model) {
+        if (!Functions.isLogin()) {
+            return "redirect:/admin/auth/login";
+        }
+        if(!Functions.checkRole("ADMIN") && !Functions.checkRole("TEACHER")) {
+            return "/admin/notfound/deny";
+        }
         List<tblAssignmentDto> assignments = aService.getAssignmentsByclassid(classid);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         for (tblAssignmentDto a : assignments) {
@@ -78,6 +92,12 @@ public class AssignmentController {
 
     @GetMapping("/create")
     public String create(@RequestParam("classid") Integer classid, Model model) {
+         if (!Functions.isLogin()) {
+            return "redirect:/admin/auth/login";
+        }
+        if(!Functions.checkRole("ADMIN") && !Functions.checkRole("TEACHER")) {
+            return "/admin/notfound/deny";
+        }
         tblAssignmentDto assignmentDto = new tblAssignmentDto();
         assignmentDto.setClassid(classid);
         model.addAttribute("assignment", assignmentDto);

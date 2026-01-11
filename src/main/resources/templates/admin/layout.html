@@ -20,7 +20,7 @@
 <div class="main-wrapper">
     <div class="header">
         <div class="header-left">
-            <a href="index.html" class="logo"> <img th:src="@{/assets/img/dhvimg.png}" width="50" height="70" alt="logo"> <span class="logoclass">HOTEL</span> </a>
+            <a href="index.html" class="logo"> <img th:src="@{/assets/img/dhvimg.png}" width="50" height="70" alt="logo"> <span class="logoclass" th:text="${session.FULLNAME}"></span> </a>
             <a href="index.html" class="logo logo-small"> <img src="assets/img/hotel_logo.png" alt="Logo" width="30" height="30"> </a>
         </div>
         <a href="javascript:void(0);" id="toggle_btn"> <i class="fe fe-text-align-left"></i> </a>
@@ -95,10 +95,11 @@
                     <div class="user-header">
                         <div class="avatar avatar-sm"> <img th:src="@{/assets/img/dhvimg.png}" alt="User Image" class="avatar-img rounded-circle"> </div>
                         <div class="user-text">
-                            <h6>Soeng Souy</h6>
+                            <h6 th:text="${session.FULLNAME}"></h6>
+
                             <p class="text-muted mb-0">Administrator</p>
                         </div>
-                    </div> <a class="dropdown-item" href="profile.html">My Profile</a> <a class="dropdown-item" href="settings.html">Account Settings</a> <a class="dropdown-item" href="login.html">Logout</a> </div>
+                    </div> <a class="dropdown-item" href="profile.html">My Profile</a> <a class="dropdown-item" href="settings.html">Account Settings</a> <a class="dropdown-item" th:href="@{/admin/auth/logout}">Đăng xuất</a> </div>
             </li>
         </ul>
         <div class="top-nav-search">
