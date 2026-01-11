@@ -47,6 +47,26 @@ public class LessonService {
         return result;
     }
 
+    public tblLessonDto getLessonById(Integer lessonid) {
+        tblLessons lesson = lessonRepo.findById(lessonid).get();
+        tblLessonDto dto = new tblLessonDto();
+
+        dto.setLessonid(lesson.getLessonid());
+        dto.setTitle(lesson.getTitle());
+        dto.setDescription(lesson.getDescription());
+        dto.setOrderidx(lesson.getOrderidx());
+        dto.setCreatedate(lesson.getCreatedate());
+        dto.setActive(lesson.isActive());
+        if(lesson.getClas() != null) {
+            dto.setClassid(lesson.getClas().getClassid());
+        }
+        if(lesson.getCreateby() != null) {
+            dto.setCreatebyid(lesson.getCreateby().getUserid());
+        }
+
+        return dto;
+    }   
+
     public void SaveLesson(tblLessonDto lessonDto) {
         tblClasses classes = classRepo.findById(lessonDto.getClassid()).get();
         tblLessons lesson = new tblLessons();
@@ -54,9 +74,18 @@ public class LessonService {
         lesson.setDescription(lessonDto.getDescription());
         lesson.setOrderidx(lessonDto.getOrderidx());
         lesson.setCreatedate(new Date());
-        lesson.setActive(lessonDto.isActive());
+        lesson.setActive(true);
         lesson.setClas(classes);
         lesson.setCreateby(classes.getTeacher());
+        lessonRepo.save(lesson);
+    }
+
+    public void UpdateLesson(tblLessonDto lessonDto) {
+        tblLessons lesson = lessonRepo.findById(lessonDto.getLessonid()).get();
+        lesson.setTitle(lessonDto.getTitle());
+        lesson.setDescription(lessonDto.getDescription());
+        lesson.setOrderidx(lessonDto.getOrderidx());
+        lesson.setActive(lessonDto.isActive());
         lessonRepo.save(lesson);
     }
 }
