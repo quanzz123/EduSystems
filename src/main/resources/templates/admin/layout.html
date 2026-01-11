@@ -114,13 +114,13 @@
                 <ul>
                     <li class="active"> <a href="index.html"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a> </li>
                     <li class="list-divider"></li>
-                    <li class="submenu"> <a href="#"><i class="fas fa-suitcase"></i> <span> Quản lí tài khoản </span> <span class="menu-arrow"></span></a>
+                    <li class="submenu"> <a href="#"><i class="fas fa-user"></i> <span> Quản lí tài khoản </span> <span class="menu-arrow"></span></a>
                         <ul class="submenu_class" style="display: none;">
                             <li><a th:href="@{/admin/accounts}"> Tài khoản</a></li>
 
                         </ul>
                     </li>
-                    <li class="submenu"> <a href="#"><i class="fas fa-suitcase"></i> <span> Quản lí lớp học </span> <span class="menu-arrow"></span></a>
+                    <li class="submenu"> <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Quản lí lớp học </span> <span class="menu-arrow"></span></a>
                         <ul class="submenu_class" style="display: none;">
                             <li><a th:href="@{/admin/class}">Tất cả lớp học</a></li>
                             <li><a th:href="@{/admin/classmembers}"> danh sách lớp học</a></li>
@@ -128,10 +128,17 @@
                         </ul>
                     </li>
 
-                    <li class="submenu"> <a href="#"><i class="fas fa-suitcase"></i> <span> Quản lí bài tập </span> <span class="menu-arrow"></span></a>
+                    <li class="submenu"> <a href="#"><i class="fas fa-clipboard"></i><span> Quản lí bài tập </span> <span class="menu-arrow"></span></a>
                         <ul class="submenu_class" style="display: none;">
                             <li><a th:href="@{/admin/assignments}">Danh sách lớp</a></li>
                             
+
+                        </ul>
+                    </li>
+                    <li class="submenu"> <a href="#"><i class="fas fa-book"></i> <span> Quản lí bài giảng </span> <span class="menu-arrow"></span></a>
+                        <ul class="submenu_class" style="display: none;">
+                            <li><a th:href="@{/admin/lessons}">Danh sách lớp</a></li>
+
 
                         </ul>
                     </li>
