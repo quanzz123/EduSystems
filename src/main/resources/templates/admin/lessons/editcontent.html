@@ -1,0 +1,71 @@
+<div xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/layout}">
+
+    <div layout:fragment="content">
+        <div class="content container-fluid">
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title mt-5">Chỉnh nội dung bài giảng</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form method="post" th:object="${lessonContentDto}" enctype="multipart/form-data">
+                        <input type="hidden" th:field="*{lessonid}">
+                        <input type="hidden" th:field="*{contentid}">
+                        <div class="row formtype">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Tiêu đề</label>
+                                    <input class="form-control" type="text" th:field="*{title}">
+                                </div>
+                            </div>
+                           
+                            <div class="col-md-4">
+                                <label class="form-label">Upload file mới (nếu có)</label>
+                                <div class="input-group">
+                                    <a class="btn btn-outline-primary" th:href="@{${lessonContentDto.contenturl}}"
+                                        target="_blank">
+                                        <i class="bi bi-download"></i> Tải file cũ
+                                    </a>
+                                    <input type="file" class="form-control" name="file">
+                                </div>
+                            </div>
+                        
+                             <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Loại tài liệu</label>
+                                    <input class="form-control" type="text" th:field="*{contenttype}">
+                                </div>
+                            </div>
+                             <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Thời lượng</label>
+                                    <input class="form-control" type="number" th:field="*{duration}">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Vị trí</label>
+                                    <input class="form-control" type="number" th:field="*{orderidx}">
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                <a style="margin-left: 2px" th:href="@{/admin/lessons/detail(id=${lessonContentDto.lessonid})}"
+                                    class="btn btn-danger">Huỷ</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

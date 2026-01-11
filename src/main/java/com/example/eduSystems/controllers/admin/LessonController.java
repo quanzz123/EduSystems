@@ -1,5 +1,7 @@
 package com.example.eduSystems.controllers.admin;
 
+import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.eduSystems.dto.tblAssignmentDto;
 import com.example.eduSystems.dto.tblLessonContentDto;
 import com.example.eduSystems.dto.tblLessonDto;
 import com.example.eduSystems.models.tblClasses;
@@ -19,9 +22,11 @@ import com.example.eduSystems.services.LessonContentService;
 import com.example.eduSystems.services.LessonService;
 
 import groovy.lang.Binding;
+import jakarta.persistence.criteria.CriteriaBuilder.In;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 
 
@@ -99,8 +104,103 @@ public class LessonController {
         Integer lid = Integer.parseInt(lessonid);
         List<tblLessonContentDto> lessonDto = lessonContentService.getLessonContentsByLessonId(lid);
         model.addAttribute("lessonDto", lessonDto);
+        model.addAttribute("lessonid", lessonid);
         System.out.println("tiêu đề:"+lessonDto.get(0).getTitle());
         
         return "admin/lessons/detail";
+    }
+    @GetMapping("/createcontent")
+    public String CreateContent(@RequestParam("id") String lessonid, Model model) {
+        // System.out.println("Lesson ID in CreateContent GET:"+lessonid);
+        tblLessonContentDto lessonContentDto = new tblLessonContentDto();
+        Integer lid = Integer.parseInt(lessonid);
+        lessonContentDto.setLessonid(lid);
+        model.addAttribute("lessonContentDto", lessonContentDto);
+        model.addAttribute("lessonid", lessonid);
+        return "admin/lessons/createcontent";
+    }
+    
+    @PostMapping("/createcontent")
+    public String SaveContent(@Valid @ModelAttribute("lessonContentDto") tblLessonContentDto lessonContentDto,
+            BindingResult result, @RequestParam("file") MultipartFile file) throws Exception {
+        if (result.hasErrors()) {
+            return "admin/lessons/createcontent";
+        }
+
+        if (file != null && !file.isEmpty()) {
+
+            String uploadDir = System.getProperty("user.dir") + "/uploads/lessons";
+
+            File dir = new File(uploadDir);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            File saveFile = new File(uploadDir, fileName);
+
+            file.transferTo(saveFile);
+            lessonContentDto.setContenturl("/files/lessons/" + fileName);
+            System.out.println("UPLOAD DIR = " + uploadDir);
+
+        }
+        lessonContentDto.setCreatedate(new Date());
+
+
+        System.out.println("Lesson ID:"+lessonContentDto.getLessonid()); //test thử xem đã có lessonid  chua
+        
+        lessonContentService.save(lessonContentDto);
+        
+        return "redirect:/admin/lessons/detail?id=" + lessonContentDto.getLessonid();
+    }
+    @GetMapping("/deletecontent")
+    public String deleteContent(@RequestParam("id") String id) {
+        Integer lid = Integer.parseInt(id);
+        tblLessonContentDto lessonContentDto = lessonContentService.getLessonContentById(lid);
+        if (lid == 0) {
+            return "redirect:/admin/lessons";
+        }
+        lessonContentService.delete(lid);
+        return "redirect:/admin/lessons/detail?id=" + lessonContentDto.getLessonid();
+    }
+    @GetMapping("/editcontent")
+    public String updatelessoncontent(@RequestParam("id") String contentid, Model model) {
+        Integer cid = Integer.parseInt(contentid);
+        tblLessonContentDto lessonContentDto = lessonContentService.getLessonContentById(cid);
+        model.addAttribute("lessonContentDto", lessonContentDto);
+        model.addAttribute("contentid", contentid);
+        return "admin/lessons/editcontent";
+    }
+
+    @PostMapping("/editcontent")
+    public String updateLessonContent(
+            @Valid @ModelAttribute("lessonContentDto") tblLessonContentDto lessonContentDto,
+            BindingResult result,
+            @RequestParam("file") MultipartFile file) throws Exception {
+
+        if (result.hasErrors()) {
+            return "admin/lessons/editcontent";
+        }
+
+
+        // Nếu có file mới
+        if (file != null && !file.isEmpty()) {
+
+            String uploadDir = System.getProperty("user.dir") + "/uploads/lessons";
+            File dir = new File(uploadDir);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            File saveFile = new File(dir, fileName);
+            file.transferTo(saveFile);
+
+            lessonContentDto.setContenturl("/files/lessons/" + fileName);
+        }
+
+        lessonContentService.updateLessonContent(lessonContentDto);
+
+        return "redirect:/admin/lessons/detail?id=" + lessonContentDto.getLessonid();
     }
 }
