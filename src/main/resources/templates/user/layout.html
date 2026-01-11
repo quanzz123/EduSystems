@@ -1,10 +1,325 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title layout:title-pattern="$CONTENT_TITLE - Sinh Viên">Sinh Viên</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-</body>
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" th:href="@{/client/assets/css/bootstrap-5.0.0-beta1.min.css}" />
+    <link rel="stylesheet" th:href="@{/client/assets/css/LineIcons.2.0.css}" />
+    <link rel="stylesheet" th:href="@{/client/assets/css/tiny-slider.css}" />
+    <link rel="stylesheet" th:href="@{/client/assets/css/animate.css}" />
+    <link rel="stylesheet" th:href="@{/client/assets/css/lindy-uikit.css}" />
+
+  </head>
+  <body>
+    <!--[if lte IE 9]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience and security.
+      </p>
+    <![endif]-->
+
+    <!-- ========================= preloader start ========================= -->
+    <div class="preloader">
+      <div class="loader">
+        <div class="spinner">
+          <div class="spinner-container">
+            <div class="spinner-rotator">
+              <div class="spinner-left">
+                <div class="spinner-circle"></div>
+              </div>
+              <div class="spinner-right">
+                <div class="spinner-circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ========================= preloader end ========================= -->
+
+    <!-- ========================= hero-section-wrapper-5 start ========================= -->
+    <section id="home" class="hero-section-wrapper-5">
+
+      <!-- ========================= header-6 start ========================= -->
+      <header class="header header-6">
+        <div class="navbar-area">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-lg-12">
+                <nav class="navbar navbar-expand-lg">
+                  <a class="navbar-brand" th:href="@{/user}">
+                    <img th:src="@{/client/assets/img/logo/logo.svg}" alt="Logo">
+                  </a>
+                  
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent6" aria-controls="navbarSupportedContent6" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="toggler-icon"></span>
+                    <span class="toggler-icon"></span>
+                    <span class="toggler-icon"></span>
+                  </button>
+  
+                  <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent6">
+                    <ul id="nav6" class="navbar-nav ms-auto">
+                      <li class="nav-item">
+                        <a class="page-scroll active" th:href="@{/user}">Trang chủ</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="page-scroll" th:href="@{/user/classes}">Lớp học</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="page-scroll" th:href="@{/user/assignments}">Bài tập</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link text-danger" th:href="@{/logout}">Đăng xuất</a>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <!-- navbar collapse -->
+                </nav>
+                <!-- navbar -->
+              </div>
+            </div>
+            <!-- row -->
+          </div>
+          <!-- container -->
+        </div>
+        <!-- navbar area -->
+      </header>
+      <!-- ========================= header-6 end ========================= -->
+
+      <!-- ========================= hero-5 start ========================= -->
+    <div class="hero-section hero-style-5 img-bg"
+        th:style="'background-image: url(' + @{/client/assets/img/hero/hero-5/hero-bg.svg} + ')'">
+      <div class="container">
+        <div class="row">
+        <!-- Dashboard Sinh Viên -->
+        <div class="mb-4 mt-5">
+            <h2> Sinh Viên </h2>
+            <p class="text-muted">Chào mừng bạn đến hệ thống học tập</p>
+        </div>
+
+        <!-- ===== STATISTICS ===== -->
+        <div class="row g-4">
+            <!-- LỚP HỌC -->
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4 text-center">
+                    <i class="lni lni-users fs-2 text-primary mb-2"></i>
+                    <h5>Lớp đang học</h5>
+                    <h2 th:text="${totalClasses != null ? totalClasses : 0}">0</h2>
+                </div>
+            </div>
+
+            <!-- BÀI TẬP -->
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4 text-center">
+                    <i class="lni lni-agenda fs-2 text-success mb-2"></i>
+                    <h5>Bài tập</h5>
+                    <h2 th:text="${totalAssignments != null ? totalAssignments : 0}">0</h2>
+                </div>
+            </div>
+
+            <!-- TIẾN ĐỘ -->
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4 text-center">
+                    <i class="lni lni-stats-up fs-2 text-warning mb-2"></i>
+                    <h5>Tiến độ</h5>
+                    <h2>
+                        <span th:text="${progress != null ? progress : 0}">0</span>%
+                    </h2>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+      <!-- ========================= hero-5 end ========================= -->
+
+    </section>
+    <!-- ========================= hero-section-wrapper-6 end ========================= -->
+
+    <!-- NỘI DUNG CHÍNH SẼ ĐƯỢC CHÈN VÀO ĐÂY -->
+    <main layout:fragment="content">
+      <!-- Nội dung từ các trang con sẽ hiển thị ở đây -->
+    </main>
+
+    <!-- ========================= feature style-5 start ========================= -->
+    <section id="feature" class="feature-section feature-style-5">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xxl-5 col-xl-5 col-lg-7 col-md-8">
+            <div class="section-title text-center mb-60">
+              <h3 class="mb-15 wow fadeInUp" data-wow-delay=".2s">Specializing In</h3>
+              <p class="wow fadeInUp" data-wow-delay=".4s">Stop wasting time and money designing and managing a website that doesn't get results. Happiness guaranteed!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4 col-md-6">
+            <div class="single-feature wow fadeInUp" data-wow-delay=".2s">
+              <div class="icon">
+                <i class="lni lni-vector"></i>
+                <svg width="110" height="72" viewBox="0 0 110 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M110 54.7589C110 85.0014 85.3757 66.2583 55 66.2583C24.6243 66.2583 0 85.0014 0 54.7589C0 24.5164 24.6243 0 55 0C85.3757 0 110 24.5164 110 54.7589Z" fill="#EBF4FF"/>
+                  </svg>                  
+              </div>
+              <div class="content">
+                <h5>Graphics Design</h5>
+                <p>Short description for the ones who look for something new.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="single-feature wow fadeInUp" data-wow-delay=".4s">
+              <div class="icon">
+                <i class="lni lni-pallet"></i>
+                <svg width="110" height="72" viewBox="0 0 110 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M110 54.7589C110 85.0014 85.3757 66.2583 55 66.2583C24.6243 66.2583 0 85.0014 0 54.7589C0 24.5164 24.6243 0 55 0C85.3757 0 110 24.5164 110 54.7589Z" fill="#EBF4FF"/>
+                  </svg> 
+              </div>
+              <div class="content">
+                <h5>Print Design</h5>
+                <p>Short description for the ones who look for something new.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="single-feature wow fadeInUp" data-wow-delay=".6s">
+              <div class="icon">
+                <i class="lni lni-stats-up"></i>
+                <svg width="110" height="72" viewBox="0 0 110 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M110 54.7589C110 85.0014 85.3757 66.2583 55 66.2583C24.6243 66.2583 0 85.0014 0 54.7589C0 24.5164 24.6243 0 55 0C85.3757 0 110 24.5164 110 54.7589Z" fill="#EBF4FF"/>
+                  </svg> 
+              </div>
+              <div class="content">
+                <h5>Business Analysis</h5>
+                <p>Short description for the ones who look for something new.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="single-feature wow fadeInUp" data-wow-delay=".2s">
+              <div class="icon">
+                <i class="lni lni-code-alt"></i>
+                <svg width="110" height="72" viewBox="0 0 110 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M110 54.7589C110 85.0014 85.3757 66.2583 55 66.2583C24.6243 66.2583 0 85.0014 0 54.7589C0 24.5164 24.6243 0 55 0C85.3757 0 110 24.5164 110 54.7589Z" fill="#EBF4FF"/>
+                  </svg> 
+              </div>
+              <div class="content">
+                <h5>Web Development</h5>
+                <p>Short description for the ones who look for something new.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="single-feature wow fadeInUp" data-wow-delay=".4s">
+              <div class="icon">
+                <i class="lni lni-lock"></i>
+                <svg width="110" height="72" viewBox="0 0 110 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M110 54.7589C110 85.0014 85.3757 66.2583 55 66.2583C24.6243 66.2583 0 85.0014 0 54.7589C0 24.5164 24.6243 0 55 0C85.3757 0 110 24.5164 110 54.7589Z" fill="#EBF4FF"/>
+                  </svg> 
+              </div>
+              <div class="content">
+                <h5>Best Security</h5>
+                <p>Short description for the ones who look for something new.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="single-feature wow fadeInUp" data-wow-delay=".6s">
+              <div class="icon">
+                <i class="lni lni-code"></i>
+                <svg width="110" height="72" viewBox="0 0 110 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M110 54.7589C110 85.0014 85.3757 66.2583 55 66.2583C24.6243 66.2583 0 85.0014 0 54.7589C0 24.5164 24.6243 0 55 0C85.3757 0 110 24.5164 110 54.7589Z" fill="#EBF4FF"/>
+                  </svg> 
+              </div>
+              <div class="content">
+                <h5>Web Design</h5>
+                <p>Short description for the ones who look for something new.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- ========================= feature style-5 end ========================= -->
+
+    <!-- ========================= footer style-4 start ========================= -->
+    <footer class="footer footer-style-4">
+      <div class="container">
+        <div class="widget-wrapper">
+          <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="footer-widget wow fadeInUp" data-wow-delay=".2s">
+                <div class="logo">
+                  <a href="#0"> <img th:src="@{/client/assets/img/logo/logo.svg}" alt=""> </a>
+                </div>
+                <p class="desc">Hệ thống quản lý học tập - EduSystems</p>
+                <ul class="socials">
+                  <li> <a href="#0"> <i class="lni lni-facebook-filled"></i> </a> </li>
+                  <li> <a href="#0"> <i class="lni lni-twitter-filled"></i> </a> </li>
+                  <li> <a href="#0"> <i class="lni lni-instagram-filled"></i> </a> </li>
+                  <li> <a href="#0"> <i class="lni lni-linkedin-original"></i> </a> </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-xl-2 offset-xl-1 col-lg-2 col-md-6 col-sm-6">
+              <div class="footer-widget wow fadeInUp" data-wow-delay=".3s">
+                <h6>Quick Link</h6>
+                <ul class="links">
+                  <li> <a th:href="@{/user}">Trang chủ</a> </li>
+                  <li> <a th:href="@{/user/classes}">Lớp học</a> </li>
+                  <li> <a th:href="@{/user/assignments}">Bài tập</a> </li>
+                  <li> <a href="#0">Liên hệ</a> </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+              <div class="footer-widget wow fadeInUp" data-wow-delay=".4s">
+                <h6>Dịch vụ</h6>
+                <ul class="links">
+                  <li> <a href="#0">Quản lý lớp học</a> </li>
+                  <li> <a href="#0">Giao bài tập</a> </li>
+                  <li> <a href="#0">Theo dõi tiến độ</a> </li>
+                  <li> <a href="#0">Báo cáo học tập</a> </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-6">
+              <div class="footer-widget wow fadeInUp" data-wow-delay=".5s">
+                <h6>Liên hệ</h6>
+                <ul class="contact-info">
+                  <li><i class="lni lni-phone"></i> 0123 456 789</li>
+                  <li><i class="lni lni-envelope"></i> support@edusystems.edu.vn</li>
+                  <li><i class="lni lni-map-marker"></i> Hà Nội, Việt Nam</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="copyright-wrapper wow fadeInUp" data-wow-delay=".2s">
+          <p>&copy; 2024 EduSystems. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+    <!-- ========================= footer style-4 end ========================= -->
+
+    <!-- ========================= scroll-top start ========================= -->
+    <a href="#" class="scroll-top"> <i class="lni lni-chevron-up"></i> </a>
+    <!-- ========================= scroll-top end ========================= -->
+		
+
+    <!-- ========================= JS here ========================= -->
+    <script th:src="@{/client/assets/js/bootstrap-5.0.0-beta1.min.js}"></script>
+    <script th:src="@{/client/assets/js/tiny-slider.js}"></script>
+    <script th:src="@{/client/assets/js/wow.min.js}"></script>
+    <script th:src="@{/client/assets/js/main.js}"></script>
+
+  </body>
 </html>

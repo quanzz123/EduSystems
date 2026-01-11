@@ -1,18 +1,17 @@
 package com.example.eduSystems.services;
 
-import com.example.eduSystems.Repository.ClassRepository;
-import com.example.eduSystems.Repository.UsersRepository;
-import com.example.eduSystems.dto.tblClassesDto;
-import com.example.eduSystems.dto.tblUsersDto;
-import com.example.eduSystems.models.tblClasses;
-import com.example.eduSystems.models.tblUsers;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.eduSystems.Repository.ClassRepository;
+import com.example.eduSystems.Repository.UsersRepository;
+import com.example.eduSystems.dto.tblClassesDto;
+import com.example.eduSystems.models.tblClasses;
+import com.example.eduSystems.models.tblUsers;
 
 @Service
 public class ClassService {
@@ -22,22 +21,23 @@ public class ClassService {
     UsersRepository userRepo;
 
     public List<tblClassesDto> getAllClasses() {
-
-        return classRepo.findallActive().stream().map(this::toDto).toList() ;
+        return classRepo.findallActive().stream().map(this::toDto).toList();
     }
     public tblClassesDto getClassById(int id) {
         tblClasses classes = classRepo.findById(id).orElse(null);
         return toDto(classes);
     }
 
-    public List<tblClasses> FinClassByTeacher(){
+    public List<tblClasses> FinClassByTeacher() {
         return classRepo.FindAllWithTeacher();
     }
 
     public void delete(Integer id) {
         tblClasses classes = classRepo.findById(id).orElse(null);
-        classes.setActive(false);
-        classRepo.save(classes);
+        if (classes != null) {
+            classes.setActive(false);
+            classRepo.save(classes);
+        }
     }
 
     public void update(tblClassesDto clsDto) throws IOException {
@@ -45,7 +45,6 @@ public class ClassService {
                 .orElse(null);
 
         mapDtoToEntity(clsDto, classes);
-
         classRepo.save(classes);
     }
     public void create(tblClassesDto dto) throws IOException {
@@ -64,7 +63,7 @@ public class ClassService {
         classRepo.save(cls);
     }
 
-    private tblClassesDto toDto (tblClasses cls) {
+    private tblClassesDto toDto(tblClasses cls) {
         tblClassesDto clsDto = new tblClassesDto();
         clsDto.setClassid(cls.getClassid());
         clsDto.setClassname(cls.getClassname());
@@ -76,14 +75,12 @@ public class ClassService {
         clsDto.setSchedule(cls.getSchedule());
         clsDto.setActive(cls.isActive());
 
-
         if (cls.getTeacher() != null) {
             clsDto.setTeacherid(cls.getTeacher().getUserid());
             clsDto.setTeachername(cls.getTeacher().getUsername());
         }
 
         return clsDto;
-
     }
 
     private void mapDtoToEntity(tblClassesDto dto, tblClasses classes) throws IOException {
@@ -103,5 +100,88 @@ public class ClassService {
 
         tblUsers user = userRepo.findById(dto.getTeacherid()).get();
         classes.setTeacher(user);
+    }
+    
+    /**
+     * Tìm class theo id (trả về entity)
+     */
+    public tblClasses findById(int id) {
+        try {
+            return classRepo.findById(id).orElse(null);
+        } catch (Exception e) {
+            System.err.println("Error finding class: " + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Lấy tất cả lớp học (trả về entity)
+     */
+    public List<tblClasses> findAll() {
+        try {
+            return classRepo.findAll();
+        } catch (Exception e) {
+            System.err.println("Error finding all classes: " + e.getMessage());
+            return new java.util.ArrayList<>();
+        }
+    }
+
+    /**
+     * Lấy lớp học theo giáo viên (trả về entity)
+     */
+    public List<tblClasses> findByTeacherId(int teacherId) {
+        try {
+            return classRepo.findByUser_userid(teacherId);
+        } catch (Exception e) {
+            System.err.println("Error finding classes by teacher: " + e.getMessage());
+            return new java.util.ArrayList<>();
+        }
+    }
+
+    /**
+     * Lấy lớp học đang active (trả về entity)
+     */
+    public List<tblClasses> findActiveClasses() {
+        try {
+            return classRepo.findByActiveTrue();
+        } catch (Exception e) {
+            System.err.println("Error finding active classes: " + e.getMessage());
+            return new java.util.ArrayList<>();
+        }
+    }
+
+    /**
+     * Lưu class entity
+     */
+    public tblClasses save(tblClasses classEntity) {
+        try {
+            return classRepo.save(classEntity);
+        } catch (Exception e) {
+            System.err.println("Error saving class: " + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Xóa class theo id
+     */
+    public void deleteById(int id) {
+        try {
+            classRepo.deleteById(id);
+        } catch (Exception e) {
+            System.err.println("Error deleting class: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Lấy danh sách lớp học của sinh viên (qua class_members)
+     */
+    public List<tblClasses> findClassesByStudentId(int studentId) {
+        try {
+            return classRepo.findClassesByStudentId(studentId);
+        } catch (Exception e) {
+            System.err.println("Error finding classes by student: " + e.getMessage());
+            return new java.util.ArrayList<>();
+        }
     }
 }

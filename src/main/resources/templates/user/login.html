@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - EduSystems</title>
+    <link rel="stylesheet" th:href="@{/client/assets/css/bootstrap-5.0.0-beta1.min.css}">
+    <link rel="stylesheet" th:href="@{/client/assets/css/LineIcons.2.0.css}">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .login-container {
+            max-width: 450px;
+            width: 100%;
+            padding: 20px;
+        }
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .login-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .login-header h2 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .login-header p {
+            margin: 10px 0 0;
+            opacity: 0.9;
+        }
+        .login-body {
+            padding: 40px 30px;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .form-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .form-control {
+            height: 50px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            padding: 12px 20px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .input-icon {
+            position: relative;
+        }
+        .input-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 18px;
+        }
+        .input-icon .form-control {
+            padding-left: 45px;
+        }
+        .btn-login {
+            width: 100%;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        .alert {
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .forgot-password {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .forgot-password a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+        .logo-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <i class="lni lni-graduation logo-icon"></i>
+                <h2>EduSystems</h2>
+                <p>Hệ thống quản lý học tập</p>
+            </div>
+            
+            <div class="login-body">
+                <!-- Hiển thị lỗi -->
+                <div th:if="${error}" class="alert alert-danger" role="alert">
+                    <i class="lni lni-warning"></i>
+                    <span th:text="${error}">Lỗi đăng nhập</span>
+                </div>
+                
+                <!-- Form đăng nhập -->
+                <form method="post" th:action="@{/login}">
+                    <div class="form-group">
+                        <label class="form-label" for="username">
+                            <i class="lni lni-user"></i> Tên đăng nhập
+                        </label>
+                        <div class="input-icon">
+                            <i class="lni lni-user"></i>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="username" 
+                                   name="username" 
+                                   placeholder="Nhập tên đăng nhập"
+                                   required
+                                   autofocus>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="password">
+                            <i class="lni lni-lock"></i> Mật khẩu
+                        </label>
+                        <div class="input-icon">
+                            <i class="lni lni-lock"></i>
+                            <input type="password" 
+                                   class="form-control" 
+                                   id="password" 
+                                   name="password" 
+                                   placeholder="Nhập mật khẩu"
+                                   required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" id="remember">
+                        <label class="form-check-label" for="remember">
+                            Ghi nhớ đăng nhập
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-login">
+                        <i class="lni lni-enter"></i> Đăng nhập
+                    </button>
+                </form>
+                
+                <div class="forgot-password">
+                    <a href="#"><i class="lni lni-question-circle"></i> Quên mật khẩu?</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <p style="color: white; opacity: 0.8;">
+                &copy; 2026 EduSystems. All rights reserved.
+            </p>
+        </div>
+    </div>
+    
+    <script th:src="@{/client/assets/js/bootstrap-5.0.0-beta1.min.js}"></script>
+</body>
+</html>
