@@ -29,7 +29,7 @@
                             </div>
                              <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Thành viên</label>
+                                    <label>Lớp</label>
                                     <select class="form-control"  th:field="*{classid}">
                                         <option value="">Lớp học</option>
                                         <option th:each="c : ${classes}" th:value="${c.classid}" th:text="${c.classname}"></option>
