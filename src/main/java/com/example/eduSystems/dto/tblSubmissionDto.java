@@ -23,6 +23,9 @@ public class tblSubmissionDto {
     private Integer assignmentid;
     private Integer userid;
 
+    //them cac truong lưu ten nguoi nộp, tên bài tập nếu cần
+    private String fullname;
+    
     public tblSubmissionDto() {}
     public tblSubmissionDto(int submissionid, String fileurl, Date submitdate, Double score, String feedback,
             String status, Integer assignmentid, Integer userid) {
@@ -84,5 +87,12 @@ public class tblSubmissionDto {
         this.userid = userid;
     }
 
+    public String getFullname() {
+        return fullname;
+    }
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+    
     
 }

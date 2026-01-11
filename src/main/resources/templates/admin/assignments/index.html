@@ -46,7 +46,7 @@
                                                         onclick="return confirm('Xóa bài này?')">
                                                         <i class="bi bi-trash"></i> Xóa
                                                     </a>|
-                                                    <a href="/submit/1" class="btn btn-sm btn-primary">
+                                                    <a th:href="@{/admin/assignments/submissions(id=${a.assignmentid})}" class="btn btn-sm btn-primary">
                                                         <i class="bi bi-file-earmark-arrow-up"></i> Bài nộp
                                                     </a>
                                                 </div>

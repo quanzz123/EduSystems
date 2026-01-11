@@ -1,0 +1,81 @@
+<div xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/layout}">
+
+    <div layout:fragment="content">
+        <div class="content container-fluid">
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="mt-5">
+                            <h4 class="card-title float-left mt-2">Danh sách bài nộp</h4>
+                            <a th:href="@{/admin/assignments/index(classid=${classid})}"
+                                class="btn btn-primary float-right veiwbutton ">Trở về <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="datatable table table-stripped">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Người nộp</th>
+                                            <th>File</th>
+                                            <th>Ngày nộp</th>
+                                            <th>Điểm</th>
+                                            <th>Trạng thái</th>
+                                            <th>Hành động</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="s, stat : ${submissions}">
+                                            <td th:text="${stat.index + 1}"></td>
+                                            <td th:text="${s.fullname}"></td>
+                                            <td><a th:href="@{${s.fileurl}}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i>Tải
+                                                    xuống</a> </td>
+                                            <td th:text="${#dates.format(s.submitdate, 'dd/MM/yyyy HH:mm')}"></td>
+                                            <td th:text="${s.score}"></td>
+                                            <!-- <td th:text="${s.status}"></td> -->
+                                            <td th:switch="${s.status}">
+                                                <span th:case="'DA_NOP'" class="badge bg-success-subtle text-success border border-success">
+                                                    Đã nộp
+                                                </span>
+
+                                                <span th:case="'QUA_HAN'" class="badge bg-danger-subtle text-danger border border-danger">
+                                                    Quá hạn
+                                                </span>
+
+                                                <span th:case="'DA_CHAM'" class="badge bg-primary-subtle text-primary border border-primary">
+                                                    Đã chấm
+                                                </span>
+
+                                                <span th:case="*" class="badge bg-secondary">
+                                                    Không xác định
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex gap-2">
+                                                    <a th:href="@{/admin/assignments/feedback(id=${s.submissionid})}"
+                                                        class="btn btn-sm btn-warning ">
+                                                        <i class="bi bi-pencil"></i> Chấm bài
+                                                    </a>
+
+                                                </div>
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

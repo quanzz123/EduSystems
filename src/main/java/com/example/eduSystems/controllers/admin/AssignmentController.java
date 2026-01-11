@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.eduSystems.dto.tblAssignmentDto;
-import com.example.eduSystems.models.tblAssignments;
+import com.example.eduSystems.dto.tblSubmissionDto;
+// import com.example.eduSystems.models.tblAssignments;
 import com.example.eduSystems.models.tblClasses;
 import com.example.eduSystems.services.AssignmentService;
 import com.example.eduSystems.services.ClassService;
+import com.example.eduSystems.services.SubmissionsService;
 
-import jakarta.servlet.http.HttpServletRequest;
+// import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @Controller
@@ -33,6 +35,9 @@ public class AssignmentController {
 
     @Autowired
     ClassService classservice;
+
+    @Autowired
+    SubmissionsService submissionsService;
 
     @GetMapping("")
     public String list(Model model) {
@@ -166,6 +171,45 @@ public class AssignmentController {
         aService.updateAssignment(dto);
 
         return "redirect:/admin/assignments/index?classid=" + dto.getClassid();
+    }
+    @GetMapping("/submissions")
+    public String ListSubmissions(@RequestParam("id") String assignmentid, Model model) {
+        Integer assignmentId = Integer.parseInt(assignmentid);
+        List<tblSubmissionDto> submissions = submissionsService.getAllSubmissionsWithAssignmentID(assignmentId);
+        tblAssignmentDto assignmentDto = aService.getAssignmentById(assignmentId);
+        if (assignmentDto != null) {
+            model.addAttribute("classid", assignmentDto.getClassid());
+
+        }
+        model.addAttribute("submissions", submissions);
+        return "admin/assignments/submissions";
+    }
+
+    @GetMapping("/feedback")
+    public String feedbackSubmission(@RequestParam("id") String submissionid, Model model) {
+        if(submissionid == null || submissionid.isEmpty()) {
+            return "admin/notfound/index";
+        }
+        Integer submissionId = Integer.parseInt(submissionid);
+        tblSubmissionDto submission = submissionsService.getSubmissionById(submissionId);
+        model.addAttribute("submission", submission);
+        model.addAttribute("submissionId", submissionId);
+        model.addAttribute("assignmentid", submission.getAssignmentid());
+        System.out.println("Mã bài tập đã giao: " + submission.getAssignmentid());
+        return "admin/assignments/feedback";
+    }
+    @PostMapping("/feedback")
+    public String saveFeedbackSubmission(
+            @Valid @ModelAttribute("submission") tblSubmissionDto dto,
+            BindingResult result
+            ) {
+        if (result.hasErrors()) {
+            return "admin/assignments/feedback";
+        }
+
+        submissionsService.updateSubmission(dto);
+
+        return "redirect:/admin/assignments/submissions?id=" + dto.getAssignmentid();
     }
 
 }
