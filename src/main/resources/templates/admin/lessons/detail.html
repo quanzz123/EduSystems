@@ -1,0 +1,63 @@
+<div xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/layout}">
+    <div layout:fragment="content">
+        <div class="content container-fluid">
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="mt-5">
+                            <h4 class="card-title float-left mt-2">Danh sách Nội dung bài giảng</h4>
+                            <a th:href="@{/admin/assignments/create(classid=${classid})}"
+                                class="btn btn-primary float-right veiwbutton "><i class="fas fa-plus-circle"></i>Thêm mới nội dung </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="datatable table table-stripped">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Tiêu đề</th>
+                                            <th>File</th>
+                                            <th>Ngày tạo</th>
+                                            <th>Loại tài liệu</th>
+                                            <th>Hành động</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="l, stat : ${lessonDto}">
+                                            <td th:text="${stat.index + 1}"></td>
+                                            <td th:text="${l.title}"></td>
+                                            <td><a th:href="@{${l.contenturl}}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i>Tải xuống</a></td>
+                                            <td th:text="${#dates.format(l.createdate, 'dd/MM/yyyy HH:mm')}"></td>
+                                            <td th:text="${l.contenttype}"></td>
+                                            <td>
+                                                <div class="d-flex gap-2">
+                                                    <a th:href="@{/admin/lessons/editcontent(id=${l.contentid})}" class="btn  btn-warning ">
+                                                        <i class="bi bi-pencil"></i> Sửa
+                                                    </a>|
+                                                    <a th:href="@{/admin/lessons/deletecontent(id=${l.contentid})}" class="btn  btn-danger "
+                                                        onclick="return confirm('Xóa bài này?')">
+                                                        <i class="bi bi-trash"></i> Xóa
+                                                    </a>
+                                            
+                                                </div>
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.eduSystems.dto.tblLessonContentDto;
 import com.example.eduSystems.dto.tblLessonDto;
 import com.example.eduSystems.models.tblClasses;
 import com.example.eduSystems.services.ClassService;
+import com.example.eduSystems.services.LessonContentService;
 import com.example.eduSystems.services.LessonService;
 
 import groovy.lang.Binding;
@@ -33,6 +35,9 @@ public class LessonController {
 
     @Autowired
     LessonService lessonService;
+
+    @Autowired
+    LessonContentService lessonContentService;
 
     @GetMapping("")
     public String index(Model model) {
@@ -89,5 +94,13 @@ public class LessonController {
         lessonService.UpdateLesson(lessonDto);
         return "redirect:/admin/lessons/list?classid=" + lessonDto.getClassid();
     }
-
+    @GetMapping("/detail")
+    public String details(@RequestParam("id") String lessonid, Model model) {
+        Integer lid = Integer.parseInt(lessonid);
+        List<tblLessonContentDto> lessonDto = lessonContentService.getLessonContentsByLessonId(lid);
+        model.addAttribute("lessonDto", lessonDto);
+        System.out.println("tiêu đề:"+lessonDto.get(0).getTitle());
+        
+        return "admin/lessons/detail";
+    }
 }
