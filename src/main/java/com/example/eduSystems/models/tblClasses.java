@@ -33,6 +33,9 @@ public class tblClasses {
     @OneToMany(mappedBy = "clas")
     private List<tblAssignments> assignments;
     
+    @OneToMany(mappedBy = "clas")
+    private List<tblLessons> lessons;
+    
     public int getClassid() {
         return classid;
     }
@@ -143,6 +146,14 @@ public class tblClasses {
 
     public void setAssignments(List<tblAssignments> assignments) {
         this.assignments = assignments;
+    }
+
+    public List<tblLessons> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<tblLessons> lessons) {
+        this.lessons = lessons;
     }
 
     

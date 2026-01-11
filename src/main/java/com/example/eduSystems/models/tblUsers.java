@@ -26,6 +26,9 @@ public class tblUsers {
     @OneToMany(mappedBy = "user")
     private List<tblSubmissions> submissions;
 
+    @OneToMany(mappedBy = "createby")
+    private List<tblLessons> lessons;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "roleid")
     private tblRoles role;
@@ -127,5 +130,13 @@ public class tblUsers {
         this.submissions = submissions;
     }
 
+    public List<tblLessons> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<tblLessons> lessons) {
+        this.lessons = lessons;
+    }
+    
     
 }
