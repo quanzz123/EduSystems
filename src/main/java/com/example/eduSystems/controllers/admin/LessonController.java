@@ -105,7 +105,7 @@ public class LessonController {
         List<tblLessonContentDto> lessonDto = lessonContentService.getLessonContentsByLessonId(lid);
         model.addAttribute("lessonDto", lessonDto);
         model.addAttribute("lessonid", lessonid);
-        System.out.println("tiêu đề:"+lessonDto.get(0).getTitle());
+        
         
         return "admin/lessons/detail";
     }

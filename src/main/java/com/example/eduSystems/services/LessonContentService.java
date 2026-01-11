@@ -78,7 +78,10 @@ public class LessonContentService {
         if (content != null) {
             content.setTitle(lessonContentDto.getTitle());
             content.setContenttype(lessonContentDto.getContenttype());
-            content.setContenturl(lessonContentDto.getContenturl());
+            
+            if(lessonContentDto.getContenturl() != null && !lessonContentDto.getContenturl().isEmpty()) {
+                content.setContenturl(lessonContentDto.getContenturl());
+            }
             content.setOrderidx(lessonContentDto.getOrderidx());
             content.setDuration(lessonContentDto.getDuration());
             
