@@ -1,21 +1,19 @@
 package com.example.eduSystems.services;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.eduSystems.Repository.ClassMembersRepository;
 import com.example.eduSystems.Repository.ClassRepository;
 import com.example.eduSystems.Repository.UsersRepository;
 import com.example.eduSystems.dto.tblClassMembersDto;
-import com.example.eduSystems.dto.tblClassesDto;
 import com.example.eduSystems.models.tblClassMembers;
 import com.example.eduSystems.models.tblClasses;
 import com.example.eduSystems.models.tblUsers;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Service
 public class ClassMemberService {
@@ -85,7 +83,28 @@ public class ClassMemberService {
 
         classMemberRepo.save(member);
     }
+        /**
+     * Đếm số lớp học mà user đang tham gia
+     */
+    public long countClassesByUserId(int userId) {
+        try {
+            return classMemberRepo.countClassesByUserId(userId);
+        } catch (Exception e) {
+            System.err.println("Error counting classes for user " + userId + ": " + e.getMessage());
+            return 0;
+        }
+    }
 
-
+    /**
+     * Lấy danh sách lớp học của user
+     */
+    public List<tblClassMembers> getClassMembersByUserId(int userId) {
+        try {
+            return classMemberRepo.findByUserId(userId);
+        } catch (Exception e) {
+            System.err.println("Error getting class members for user " + userId + ": " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
 
 }

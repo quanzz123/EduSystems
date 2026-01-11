@@ -1,18 +1,19 @@
 package com.example.eduSystems.services;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.eduSystems.Repository.RolesRepository;
 import com.example.eduSystems.Repository.UsersRepository;
 import com.example.eduSystems.dto.tblUsersDto;
 import com.example.eduSystems.models.tblRoles;
 import com.example.eduSystems.models.tblUsers;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 public class UserService {
 
@@ -100,5 +101,79 @@ public class UserService {
             user.setCreated(new Date());
         }
     }
+    
+    /**
+     * Tìm user theo username (dùng cho authentication)
+     */
+    public tblUsers findByUsername(String username) {
+        try {
+            Optional<tblUsers> user = userRepo.findByUsername(username);
+            return user.orElse(null);
+        } catch (Exception e) {
+            System.err.println("Error finding user by username: " + e.getMessage());
+            return null;
+        }
+    }
 
+    /**
+     * Tìm user theo email
+     */
+    public tblUsers findByEmail(String email) {
+        try {
+            Optional<tblUsers> user = userRepo.findByEmail(email);
+            return user.orElse(null);
+        } catch (Exception e) {
+            System.err.println("Error finding user by email: " + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Tìm user theo id (trả về entity)
+     */
+    public tblUsers findById(int id) {
+        try {
+            Optional<tblUsers> user = userRepo.findById(id);
+            return user.orElse(null);
+        } catch (Exception e) {
+            System.err.println("Error finding user by id: " + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Lưu user entity
+     */
+    public tblUsers save(tblUsers user) {
+        try {
+            return userRepo.save(user);
+        } catch (Exception e) {
+            System.err.println("Error saving user: " + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Kiểm tra username có tồn tại không
+     */
+    public boolean existsByUsername(String username) {
+        try {
+            return userRepo.existsByUsername(username);
+        } catch (Exception e) {
+            System.err.println("Error checking username exists: " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Kiểm tra email có tồn tại không
+     */
+    public boolean existsByEmail(String email) {
+        try {
+            return userRepo.existsByEmail(email);
+        } catch (Exception e) {
+            System.err.println("Error checking email exists: " + e.getMessage());
+            return false;
+        }
+    }
 }
