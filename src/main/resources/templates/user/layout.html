@@ -74,9 +74,29 @@
                       <li class="nav-item">
                         <a class="page-scroll" th:href="@{/user/assignments}">Bài tập</a>
                       </li>
-                      <li class="nav-item">
-                        <a class="nav-link text-danger" th:href="@{/logout}">Đăng xuất</a>
-                      </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                              <i class="lni lni-user"></i> Sinh viên : 
+                              <span th:text="${currentUser != null && currentUser.fullname != null 
+                                                ? currentUser.fullname : 'Sinh viên'}"></span>                                               
+                                  
+                              </span>
+                          </a>
+                          <ul class="dropdown-menu">
+                              <li>
+                                  <a class="dropdown-item" th:href="@{/user/profile}">
+                                      Thông tin cá nhân
+                                  </a>
+                              </li>
+                              <li><hr class="dropdown-divider"></li>
+                              <li>
+                                  <a class="dropdown-item text-danger" th:href="@{/logout}">
+                                      Đăng xuất
+                                  </a>
+                              </li>
+                          </ul>
+                      </li>                    
                     </ul>
                   </div>
                   
@@ -100,7 +120,7 @@
         <div class="row">
         <!-- Dashboard Sinh Viên -->
         <div class="mb-4 mt-5">
-            <h2> Sinh Viên </h2>
+            <h2> Xin Chào </h2>
             <p class="text-muted">Chào mừng bạn đến hệ thống học tập</p>
         </div>
 

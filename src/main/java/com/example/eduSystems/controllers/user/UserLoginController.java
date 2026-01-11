@@ -23,7 +23,7 @@ public class UserLoginController {
      */
     @GetMapping("/login")
     public String showLoginPage() {
-        return "login"; // templates/login.html
+        return "user/login"; // templates/login.html
     }
 
     /**
@@ -42,26 +42,32 @@ public class UserLoginController {
             
             if (user == null) {
                 model.addAttribute("error", "Tên đăng nhập không tồn tại!");
-                return "login";
+                return "user/login";
             }
             
             // Kiểm tra password (giả sử password đã được mã hóa)
             if (!user.getPasswordhash().equals(password)) {
                 model.addAttribute("error", "Mật khẩu không đúng!");
-                return "login";
+                return "user/login";
             }
             
             // Kiểm tra trạng thái active
             if (!user.isActive()) {
                 model.addAttribute("error", "Tài khoản đã bị vô hiệu hóa!");
-                return "login";
+                return "user/login";
             }
             
             // Lưu thông tin vào session
             session.setAttribute("username", username);
             session.setAttribute("userid", user.getUserid());
             session.setAttribute("roleid", user.getRole().getRoleid());
-            
+            // Lưu object user vào session (QUAN TRỌNG)
+            session.setAttribute("user", user);
+
+            // Có thể giữ lại nếu cần
+            session.setAttribute("userid", user.getUserid());
+            session.setAttribute("roleid", user.getRole().getRoleid());
+
             // Redirect theo role
             int roleId = user.getRole().getRoleid();
             
@@ -76,14 +82,14 @@ public class UserLoginController {
                 return "redirect:/user";
             } else {
                 model.addAttribute("error", "Role không hợp lệ!");
-                return "login";
+                return "user/login";
             }
             
         } catch (Exception e) {
             System.err.println("Login error: " + e.getMessage());
             e.printStackTrace();
             model.addAttribute("error", "Có lỗi xảy ra, vui lòng thử lại!");
-            return "login";
+            return "user/login";
         }
     }
 
@@ -101,22 +107,18 @@ public class UserLoginController {
      */
     @GetMapping("/")
     public String home(HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        
-        if (username != null) {
-            Integer roleId = (Integer) session.getAttribute("roleid");
-            
-            if (roleId != null) {
-                if (roleId == 1) {
-                    return "redirect:/admin";
-                } else if (roleId == 2) {
-                    return "redirect:/teacher";
-                } else if (roleId == 3) {
-                    return "redirect:/user";
-                }
-            }
+
+        tblUsers user = (tblUsers) session.getAttribute("user");
+
+        if (user != null) {
+            int roleId = user.getRole().getRoleid();
+
+            if (roleId == 1) return "redirect:/admin";
+            if (roleId == 2) return "redirect:/teacher";
+            if (roleId == 3) return "redirect:/user";
         }
-        
+
         return "redirect:/login";
     }
+
 }

@@ -140,4 +140,14 @@ public class UserHomeController {
             return 0.0;
         }
     }
+        @GetMapping("/user")
+    public String userHome(Model model, HttpSession session) {
+
+        tblUsers user = (tblUsers) session.getAttribute("user");
+
+        model.addAttribute("currentUser", user);
+
+        return "user/index";
+    }
+
 }

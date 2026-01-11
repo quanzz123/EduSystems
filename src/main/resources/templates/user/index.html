@@ -29,7 +29,7 @@
                             <tr th:each="a : ${assignments}">
                                 <td th:text="${a.title}">Bài tập mẫu</td>
                                 <td th:text="${a.className}">Lớp mẫu</td>
-                                <td th:text="${a.deadline != null ? #temporals.format(a.deadline, 'dd/MM/yyyy') : 'Chưa có hạn'}">01/01/2024</td>
+                                <td th:text="${a.deadline != null ? #dates.format(a.deadline, 'dd/MM/yyyy') : 'Chưa có hạn'}">
                                 <td>
                                     <span th:class="${a.status == 'Đang mở' ? 'badge bg-success' : 
                                                      a.status == 'Sắp đến hạn' ? 'badge bg-warning' : 
