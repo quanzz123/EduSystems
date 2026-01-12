@@ -67,23 +67,31 @@
 
                     <!-- FOOTER -->
                     <div class="assignment-footer">
-
-                        <!-- TRẠNG THÁI (tính trực tiếp trong view) -->
                         <span class="status"
-                              th:classappend="${a.deadline != null and a.deadline.before(#dates.createNow())}
-                                                ? 'late' : 'open'">
-                            <span th:text="${a.deadline != null and a.deadline.before(#dates.createNow()) 
-                                            ? 'Quá hạn' : 'Đang mở'}">
+                            th:classappend="${a.deadline != null and a.deadline.before(#dates.createNow())} ? 'late' : 'open'">
+                            <span th:text="${a.deadline != null and a.deadline.before(#dates.createNow()) ? 'Quá hạn' : 'Đang mở'}">
                                 Đang mở
                             </span>
                         </span>
 
-                        <a th:href="@{/user/assignments/{id}(id=${a.assignmentid})}"
-                           class="btn btn-sm btn-primary">
+                        <!-- Nút mở form nộp bài -->
+                        <button class="btn btn-sm btn-primary" type="button" 
+                                data-bs-toggle="collapse" 
+                                th:data-bs-target="'#submitForm' + ${a.assignmentid}">
                             <i class="lni lni-upload me-1"></i> Nộp bài
-                        </a>
+                        </button>
                     </div>
 
+                    <!-- Form nộp bài (ẩn, collapse) -->
+                    <div class="collapse mt-3" th:id="'submitForm' + ${a.assignmentid}">
+                        <form th:action="@{/user/assignments/{id}/submit(id=${a.assignmentid})}" 
+                            method="post" enctype="multipart/form-data">
+                            <div class="input-group">
+                                <input type="file" name="file" class="form-control" required>
+                                <button type="submit" class="btn btn-success">Gửi</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
 
